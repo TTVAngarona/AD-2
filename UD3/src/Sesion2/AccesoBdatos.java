@@ -2,6 +2,7 @@ package Sesion2;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -84,6 +85,21 @@ public class AccesoBdatos {
 				}
 		}
 		return salida;
+	}
+	public int actualizar(int socioID, String nombre, int estatura, int edad, String localidad){
+		try {
+			String sql="update socio set nombre=?, estatura=?, edad =?, localidad=? where socioID=?";
+			PreparedStatement actualiza = conecta.prepareStatement(sql);
+			actualiza.setInt(5, socioID);
+			actualiza.setString(1,nombre);
+			actualiza.setInt(2,estatura);
+			actualiza.setInt(3,edad);
+			actualiza.setString(4,localidad);
+			return actualiza.executeUpdate();
+			
+		} catch(SQLException e){
+		return 0;
+		}
 	}
 	
 }

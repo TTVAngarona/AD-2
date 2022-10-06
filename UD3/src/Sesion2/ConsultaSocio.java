@@ -185,6 +185,15 @@ public class ConsultaSocio extends JFrame {
 					}
 					
 				}
+				if(event.getSource() == botonAc) {
+					int socioID = Integer.parseInt(caja1.getText());
+					String nombre = caja2.getText();
+					int estatura = Integer.parseInt(caja3.getText());
+					int edad = Integer.parseInt(caja4.getText());
+					String localidad = caja5.getText();
+					
+					
+				}
 				
 			}else {
 				JOptionPane.showMessageDialog(null,"No se han encontrado socios de " + caja6.getText() ,"Mensaje", JOptionPane.INFORMATION_MESSAGE);
