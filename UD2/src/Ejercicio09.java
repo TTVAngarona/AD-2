@@ -22,7 +22,6 @@ public class Ejercicio09 {
 				try {
 					i++;
 					raf.writeInt(i);
-					
 					StringBuffer sb=new StringBuffer(p.getNombre());
 					sb.setLength(20);
 					String nombre=sb.toString();
@@ -59,8 +58,10 @@ public class Ejercicio09 {
 			
 			raf.writeInt(20);
 			raf.writeDouble(22.5);
-			raf.close();
-			raf = new RandomAccessFile("src\\\\Ficheros\\\\Profesores.dat", "r");
+			
+		/*	raf.close();		Opcional
+			raf = new RandomAccessFile("src\\\\Ficheros\\\\Profesores.dat", "r"); */ 
+		
 			raf.seek(0);
 			while(raf.getFilePointer()!=raf.length()) {
 //			for (int j = 0; j < raf.length() / 56; j++) {
@@ -74,24 +75,24 @@ public class Ejercicio09 {
 				System.out.print(raf.readDouble() + "\n");
 
 			}
-			raf.seek(172);
+	/*		raf.seek(172);
 			String name="";
 			for (int k = 0; k < 20; k++) {
 				name+=raf.readChar();
 			}
 			System.out.print(name.trim());
-			raf.seek(raf.getFilePointer()-96);
+			raf.seek(raf.getFilePointer()-96);		Para testear
 			 name="";
 			for (int k = 0; k < 20; k++) {
 				name+=raf.readChar();
 			}
-			System.out.print(name.trim());
+			System.out.print(name.trim()); 
 			raf.seek(19*56+4);
 			 name="";
 			for (int k = 0; k < 20; k++) {
 				name+=raf.readChar();
 			}
-			System.out.print(name.trim()+raf.readInt()+raf.readDouble());
+			System.out.print(name.trim()+raf.readInt()+raf.readDouble()); */
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
