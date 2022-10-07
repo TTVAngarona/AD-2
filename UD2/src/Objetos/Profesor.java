@@ -2,7 +2,7 @@ package Objetos;
 
 import java.io.Serializable;
 
-public class Profesor implements Serializable {
+public class Profesor implements Serializable{
 	//Atributos
 	private String Nombre;
 	private double antiguedad;
