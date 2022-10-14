@@ -90,11 +90,14 @@ public class AccesoBdatos {
 		try {
 			String sql="update socio set nombre=?, estatura=?, edad =?, localidad=? where socioID=?";
 			PreparedStatement actualiza = conecta.prepareStatement(sql);
-			actualiza.setInt(5, socioID);
+			
+			
 			actualiza.setString(1,nombre);
 			actualiza.setInt(2,estatura);
 			actualiza.setInt(3,edad);
 			actualiza.setString(4,localidad);
+			actualiza.setInt(5, socioID);
+			
 			return actualiza.executeUpdate();
 			
 		} catch(SQLException e){

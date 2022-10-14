@@ -187,12 +187,14 @@ public class ConsultaSocio extends JFrame {
 				}
 				if(event.getSource() == botonAc) {
 					int socioID = Integer.parseInt(caja1.getText());
+					System.out.println(socioID);
 					String nombre = caja2.getText();
 					int estatura = Integer.parseInt(caja3.getText());
 					int edad = Integer.parseInt(caja4.getText());
 					String localidad = caja5.getText();
 					
-					
+					abd.actualizar(socioID, nombre, estatura, edad, localidad);
+					JOptionPane.showMessageDialog(null,"Se ha actualizado correctamente ");
 				}
 				
 			}else {
