@@ -1,4 +1,4 @@
-package Sesion2;
+package Sesion2_Ej1;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;

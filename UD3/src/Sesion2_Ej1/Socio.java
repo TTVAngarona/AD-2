@@ -1,4 +1,4 @@
-package Sesion2;
+package Sesion2_Ej1;
 
 public class Socio {
 	
