@@ -187,7 +187,6 @@ public class ConsultaSocio extends JFrame {
 				}
 				if(event.getSource() == botonAc) {
 					int socioID = Integer.parseInt(caja1.getText());
-					System.out.println(socioID);
 					String nombre = caja2.getText();
 					int estatura = Integer.parseInt(caja3.getText());
 					int edad = Integer.parseInt(caja4.getText());
@@ -195,6 +194,21 @@ public class ConsultaSocio extends JFrame {
 					
 					abd.actualizar(socioID, nombre, estatura, edad, localidad);
 					JOptionPane.showMessageDialog(null,"Se ha actualizado correctamente ");
+				}
+				if(event.getSource() == botonBo) {
+					int socioID = Integer.parseInt(caja1.getText());
+					abd.borrar(socioID);
+					JOptionPane.showMessageDialog(null, "Se ha borrado correctamente.");
+				}
+				if(event.getSource() == botonNu) {
+
+					String nombre = caja2.getText();
+					int estatura = Integer.parseInt(caja3.getText());
+					int edad = Integer.parseInt(caja4.getText());
+					String localidad = caja5.getText();
+										
+					abd.nuevo(nombre, estatura, edad, localidad);
+					JOptionPane.showMessageDialog(null, "Se ha creado uno nuevo correctamente.");
 				}
 				
 			}else {

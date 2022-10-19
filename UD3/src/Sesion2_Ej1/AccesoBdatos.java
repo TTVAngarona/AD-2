@@ -104,7 +104,50 @@ public class AccesoBdatos {
 		return 0;
 		}
 	}
+	public int borrar (int socioId){
+		int filas=0; // 
+		try {
+			PreparedStatement borrar = conecta.prepareStatement("DELETE FROM socio WHERE socioID=?");
+			borrar.setInt(1, socioId);
+			filas = borrar.executeUpdate ();
+			borrar.close ();
+		return filas;
+		} catch (SQLException e) {
+			return e.getErrorCode(); // En caso de error en la consulta devuelve el c�digo de error MySQL
+		}
+	}
+	
+	public int nuevo(String nombre, int estatura, int edad, String localidad) {
+		try {
+			String sql="insert into socio values (?,?,?,?,?)";
+			PreparedStatement inserta=conecta.prepareStatement(sql);
+			inserta.setInt(1, nuevoId());
+			inserta.setString(2,nombre);
+			inserta.setInt(3, estatura);
+			inserta.setInt(4, edad);
+			inserta.setString(5,localidad);
+			return inserta.executeUpdate();
+		} catch(SQLException e){
+			return e.getErrorCode();
+		}
+		
+	}
+	public int nuevoId() {
+		int nuevoId = 0;
+		try {
+			String sql="SELECT * FROM socio order by socioID desc limit 1";
+			PreparedStatement inserta =conecta.prepareStatement(sql);
+			ResultSet rs = inserta.executeQuery();
+			if(rs.next()) {
+				nuevoId = rs.getInt(1);
+			}
+			return nuevoId + 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			return e.getErrorCode();
+		}
+		
+		
+	}
 	
 }
-
-//probar la logica en el main antes
