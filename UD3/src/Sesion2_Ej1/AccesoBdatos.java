@@ -1,5 +1,6 @@
 package Sesion2_Ej1;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -59,9 +60,13 @@ public class AccesoBdatos {
 		ResultSet salida = null;
 		if(localidad.isEmpty()==false) { //Si localidad es distinto de vacio ejecuta lo de dentro
 			try {
-			Statement consulta = conecta.createStatement();
-			ResultSet reg = consulta.executeQuery ("SELECT * FROM socio WHERE localidad like '" + localidad +"'");
-				
+			/* Statement consulta = conecta.createStatement();
+			ResultSet reg = consulta.executeQuery ("SELECT * FROM socio WHERE localidad like '" + localidad +"'"); */
+				 
+				 CallableStatement proc = conecta.prepareCall(" CALL buscar(?) ");
+				 proc.setString(1, localidad);
+				 ResultSet reg =proc.executeQuery();
+				 
 			if (reg.next()) {//Si hay siguiente quiere decir que ha encontrado coincidencias asi que devuelve el result set de esos socios
 				salida = reg;
 			}else {//Si no hay siguiente, quiere decir que no ha encontrado coincidencias, en ese caso devuelve null y pondremos que no hay coincidencias
@@ -85,7 +90,9 @@ public class AccesoBdatos {
 				}
 		}
 		return salida;
-	}
+	} 
+	
+	
 	public int actualizar(int socioID, String nombre, int estatura, int edad, String localidad){
 		try {
 			String sql="update socio set nombre=?, estatura=?, edad =?, localidad=? where socioID=?";
@@ -149,5 +156,7 @@ public class AccesoBdatos {
 		
 		
 	}
+	
+	
 	
 }
