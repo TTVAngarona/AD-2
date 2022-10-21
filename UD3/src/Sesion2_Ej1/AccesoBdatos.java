@@ -33,6 +33,8 @@ public class AccesoBdatos {
 		try {
 		Class.forName(driver);
 		conecta = DriverManager.getConnection(url, username, password); //Cuando ejecutemos conectar, iniciaremos todos los pasos para conectar
+		
+		conecta.setAutoCommit(false);
 		}catch (ClassNotFoundException cnf) {
 			System.out.println("Clase driver no encontrada");
 		}catch (SQLException sqle) {
@@ -43,6 +45,7 @@ public class AccesoBdatos {
 	public void desconectar() {
 		try {
 		if (conecta !=null) { //Si en conecta hay algo, entonces desconecta. Con esto tenemos un metodo que cierre la conexion
+			conecta.setAutoCommit(true);
 			conecta.close();
 		}
 		}catch (SQLException sqle) {
@@ -104,10 +107,16 @@ public class AccesoBdatos {
 			actualiza.setInt(3,edad);
 			actualiza.setString(4,localidad);
 			actualiza.setInt(5, socioID);
-			
+			conecta.commit();
 			return actualiza.executeUpdate();
 			
 		} catch(SQLException e){
+			try {
+				conecta.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		return 0;
 		}
 	}
@@ -118,8 +127,15 @@ public class AccesoBdatos {
 			borrar.setInt(1, socioId);
 			filas = borrar.executeUpdate ();
 			borrar.close ();
+			conecta.commit();
 		return filas;
 		} catch (SQLException e) {
+			try {
+				conecta.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			return e.getErrorCode(); // En caso de error en la consulta devuelve el c�digo de error MySQL
 		}
 	}
@@ -133,8 +149,17 @@ public class AccesoBdatos {
 			inserta.setInt(3, estatura);
 			inserta.setInt(4, edad);
 			inserta.setString(5,localidad);
+			conecta.commit();
 			return inserta.executeUpdate();
 		} catch(SQLException e){
+			
+			try {
+				conecta.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 			return e.getErrorCode();
 		}
 		
