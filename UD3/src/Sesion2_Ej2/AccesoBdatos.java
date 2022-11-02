@@ -52,4 +52,4 @@ public class AccesoBdatos {
 	
 }
 
-//probar la logica en el main antes
+// ESTA ECHO EN EL EJ1
