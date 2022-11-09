@@ -53,27 +53,7 @@ public class AccesoBDatos {
 		
 		
 		return false;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}		
 	
 	//Desconectar a la base de datos
 	public void desconectar(){
