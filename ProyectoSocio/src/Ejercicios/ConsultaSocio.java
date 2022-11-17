@@ -136,7 +136,7 @@ public class ConsultaSocio extends JFrame {
 			AccesoBdatos abd = new AccesoBdatos();
 			abd.conectar();
 			List<Socio> lista = abd.consultaLocalidad(caja6.getText());
-			
+			Socio socio = new Socio(lista.get(posicion).getSocioId(), lista.get(posicion).getNombre(), lista.get(posicion).getEstatura(), lista.get(posicion).getEdad(), lista.get(posicion).getLocalidad());
 			
 			try {
 			if (lista != null) {
@@ -146,30 +146,34 @@ public class ConsultaSocio extends JFrame {
 				//rs.first();primero = rs.getRow(); // no hace falta por que por defecto cuando le por primera vez esta en la primera posicion
 				//int posicion = 1; //hay que declararlo como estatico mas arriba por que sino cada ve que entra al oyente boton, lo pondria todo el rato en 1
 				//int ultimo = lista.list().lastIndexOf(lista);
-				;
+				
 				
 				if(event.getSource() == boton3) { //buscar
 					posicion = 1;
-					etiq6.setText("Socio " + posicion + " de " + ultimo);
-					Socio socio = new Socio(lista.get(posicion).getSocioId(),);
-					lista.get(posicion);
+					etiq6.setText("Socio " + posicion + " de " + lista.size());	
+					caja1.setText(String.valueOf(socio.getSocioId()));
+					caja2.setText(socio.getNombre());
+					caja3.setText(String.valueOf(socio.getEstatura()));
+					caja4.setText(String.valueOf(socio.getEdad()));
+					caja5.setText(socio.getLocalidad());
+					
 					
 				}
 								
-				if(event.getSource() == boton2) { //Siguiente
-					
-					
-					
-					/*posicion++;
-					if(posicion > ultimo) {
-						posicion = ultimo;
+				if(event.getSource() == boton2) { //Siguiente					
+					posicion++;					
+					if(posicion > lista.size()) {
+						posicion = lista.size();
 						JOptionPane.showMessageDialog(null,"No existen registros posteriores" ,"Mensaje", JOptionPane.INFORMATION_MESSAGE);
 					}else {
-						etiq6.setText("Socio " + posicion + " de " + ultimo);
-						//.absolute(posicion);
-						
-						
-					}*/
+						etiq6.setText("Socio " + posicion + " de " + lista.size());
+						caja1.setText(String.valueOf(socio.getSocioId()));
+						caja2.setText(socio.getNombre());
+						caja3.setText(String.valueOf(socio.getEstatura()));
+						caja4.setText(String.valueOf(socio.getEdad()));
+						caja5.setText(socio.getLocalidad());
+						//.absolute(posicion);	
+					}
 				}
 				if(event.getSource() == boton1) { //Anterior
 					posicion--;
@@ -177,23 +181,24 @@ public class ConsultaSocio extends JFrame {
 						posicion = 1;
 						JOptionPane.showMessageDialog(null,"No existen registros anteriores" ,"Mensaje", JOptionPane.INFORMATION_MESSAGE);
 					}else {
-						etiq6.setText("Socio " + posicion + " de " + ultimo);
+						etiq6.setText("Socio " + posicion + " de " + lista.size());
 						//rs.absolute(posicion);
-						
-						/*caja1.setText(String.valueOf(rs.getInt(1)));
-						caja2.setText(rs.getString(2));
-						caja3.setText(String.valueOf(rs.getInt(3)));
-						caja4.setText(String.valueOf(rs.getInt(4)));
-						caja5.setText(rs.getString(5));*/
+						caja1.setText(String.valueOf(socio.getSocioId()));
+						caja2.setText(socio.getNombre());
+						caja3.setText(String.valueOf(socio.getEstatura()));
+						caja4.setText(String.valueOf(socio.getEdad()));
+						caja5.setText(socio.getLocalidad());
 					}
 					
 				}
 				if(event.getSource() == botonAc) {
-					int socioID = Integer.parseInt(caja1.getText());
-					String nombre = caja2.getText();
-					int estatura = Integer.parseInt(caja3.getText());
-					int edad = Integer.parseInt(caja4.getText());
-					String localidad = caja5.getText();
+					Socio socio2 = new Socio();
+					String nombreAntiguo = caja2.getText();
+					Integer estaturaAntiguo = Integer.valueOf(caja3.getText());
+					Integer edadAntiguo = socio.getEdad();
+					String localidadAntiguo = socio.getLocalidad();
+					
+					
 					
 				//	abd.actualizar(socioID, nombre, estatura, edad, localidad);
 					JOptionPane.showMessageDialog(null,"Se ha actualizado correctamente ");

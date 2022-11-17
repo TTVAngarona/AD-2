@@ -12,9 +12,11 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import Clases.Socio;
 import Ejercicios.SessionFactoryUtil;
+import primero.Empleados;
 
 public class AccesoBdatos {	
 	private SessionFactory sesionFactory; //Atributo conexion, muy importante. Solo declarado sin valor, para utilizarlo en el metodo conecta 
@@ -53,31 +55,19 @@ public class AccesoBdatos {
 	} 
 	
 	
-	/*public int actualizar(int socioID, String nombre, int estatura, int edad, String localidad){
-		try {
-			String sql="update socio set nombre=?, estatura=?, edad =?, localidad=? where socioID=?";
-			PreparedStatement actualiza = conecta.prepareStatement(sql);
-			
-			
-			actualiza.setString(1,nombre);
-			actualiza.setInt(2,estatura);
-			actualiza.setInt(3,edad);
-			actualiza.setString(4,localidad);
-			actualiza.setInt(5, socioID);
-			conecta.commit();
-			return actualiza.executeUpdate();
-			
-		} catch(SQLException e){
-			try {
-				conecta.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+	public int actualizar(int socioID, String nombre, int estatura, int edad, String localidad){
+		Transaction tx = session.beginTransaction();
+		Socio socio = new Socio();
+		socio = (Socio) session.load(Socio.class, socioID);
+		String nombreAntiguo = socio.getNombre();
+		Integer estaturaAntiguo = socio.getEstatura();
+		Integer edadAntiguo = socio.getEdad();
+		String localidadAntiguo = socio.getLocalidad();
+		
+		
 		return 0;
-		}
 	}
-	public int borrar (int socioId){
+	/*public int borrar (int socioId){
 		int filas=0; // 
 		try {
 			PreparedStatement borrar = conecta.prepareStatement("DELETE FROM socio WHERE socioID=?");
