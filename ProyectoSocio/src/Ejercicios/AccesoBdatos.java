@@ -16,7 +16,6 @@ import org.hibernate.Transaction;
 
 import Clases.Socio;
 import Ejercicios.SessionFactoryUtil;
-import primero.Empleados;
 
 public class AccesoBdatos {	
 	private SessionFactory sesionFactory; //Atributo conexion, muy importante. Solo declarado sin valor, para utilizarlo en el metodo conecta 
@@ -55,63 +54,36 @@ public class AccesoBdatos {
 	} 
 	
 	
-	public int actualizar(int socioID, String nombre, int estatura, int edad, String localidad){
+	public int actualizar(Socio socio){
 		Transaction tx = session.beginTransaction();
-		Socio socio = new Socio();
-		socio = (Socio) session.load(Socio.class, socioID);
-		String nombreAntiguo = socio.getNombre();
-		Integer estaturaAntiguo = socio.getEstatura();
-		Integer edadAntiguo = socio.getEdad();
-		String localidadAntiguo = socio.getLocalidad();
+		Socio socio2 = (Socio) session.load(Socio.class,(int)socio.getSocioId());
+		socio2.setNombre(socio.getNombre());
+		socio2.setEstatura(socio.getEstatura());
+		socio2.setEdad(socio.getEdad());
+		socio2.setLocalidad(socio.getLocalidad());
 		
+		session.update(socio2); // modifica el objeto
+		tx.commit();
+		System.out.println("Nombre nuevo: " + socio.getNombre());
+		return 0;
 		
+	}
+	public int borrar (int socioId){
+		Transaction tx = session.beginTransaction();
+		
+		Socio socio = (Socio) session.get(Socio.class, (Integer) socioId);
+		session.delete(socio);
+		tx.commit();		
 		return 0;
 	}
-	/*public int borrar (int socioId){
-		int filas=0; // 
-		try {
-			PreparedStatement borrar = conecta.prepareStatement("DELETE FROM socio WHERE socioID=?");
-			borrar.setInt(1, socioId);
-			filas = borrar.executeUpdate ();
-			borrar.close ();
-			conecta.commit();
-		return filas;
-		} catch (SQLException e) {
-			try {
-				conecta.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			return e.getErrorCode(); // En caso de error en la consulta devuelve el c�digo de error MySQL
-		}
-	}
-	
-	public int nuevo(String nombre, int estatura, int edad, String localidad) {
-		try {
-			String sql="insert into socio values (?,?,?,?,?)";
-			PreparedStatement inserta=conecta.prepareStatement(sql);
-			inserta.setInt(1, nuevoId());
-			inserta.setString(2,nombre);
-			inserta.setInt(3, estatura);
-			inserta.setInt(4, edad);
-			inserta.setString(5,localidad);
-			conecta.commit();
-			return inserta.executeUpdate();
-		} catch(SQLException e){
-			
-			try {
-				conecta.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-			return e.getErrorCode();
-		}
+	public int nuevo(Socio socio) {
+		Transaction tx = session.beginTransaction();
 		
+		
+		
+		return 1;
 	}
-	public int nuevoId() {
+	/*public int nuevoId() {
 		int nuevoId = 0;
 		try {
 			String sql="SELECT * FROM socio order by socioID desc limit 1";
@@ -127,8 +99,7 @@ public class AccesoBdatos {
 		}
 		
 		
-	}
-	*/
+	}*/
 	
 	
 }

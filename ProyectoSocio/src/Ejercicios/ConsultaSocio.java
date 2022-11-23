@@ -26,7 +26,7 @@ public class ConsultaSocio extends JFrame {
 	JTextField caja1, caja2, caja3, caja4, caja5, caja6;
 	JLabel etiq1, etiq2, etiq3, etiq4, etiq5, etiq6, etiq7, etiq8;
 	static int ultimo = 0;
-	static int posicion = 1;
+	static int posicion = 0;
 	
 	
 	public ConsultaSocio() {
@@ -136,7 +136,9 @@ public class ConsultaSocio extends JFrame {
 			AccesoBdatos abd = new AccesoBdatos();
 			abd.conectar();
 			List<Socio> lista = abd.consultaLocalidad(caja6.getText());
-			Socio socio = new Socio(lista.get(posicion).getSocioId(), lista.get(posicion).getNombre(), lista.get(posicion).getEstatura(), lista.get(posicion).getEdad(), lista.get(posicion).getLocalidad());
+			Socio socio = new Socio();
+			
+			
 			
 			try {
 			if (lista != null) {
@@ -149,15 +151,13 @@ public class ConsultaSocio extends JFrame {
 				
 				
 				if(event.getSource() == boton3) { //buscar
-					posicion = 1;
-					etiq6.setText("Socio " + posicion + " de " + lista.size());	
-					caja1.setText(String.valueOf(socio.getSocioId()));
-					caja2.setText(socio.getNombre());
-					caja3.setText(String.valueOf(socio.getEstatura()));
-					caja4.setText(String.valueOf(socio.getEdad()));
-					caja5.setText(socio.getLocalidad());
-					
-					
+					posicion = 0;
+					etiq6.setText("Socio " + posicion + " de " + (lista.size()-1));	
+					caja1.setText(String.valueOf(lista.get(posicion).getSocioId()));
+					caja2.setText(lista.get(posicion).getNombre());
+					caja3.setText(String.valueOf(lista.get(posicion).getEstatura()));
+					caja4.setText(String.valueOf(lista.get(posicion).getEdad()));
+					caja5.setText(lista.get(posicion).getLocalidad());
 				}
 								
 				if(event.getSource() == boton2) { //Siguiente					
@@ -166,55 +166,57 @@ public class ConsultaSocio extends JFrame {
 						posicion = lista.size();
 						JOptionPane.showMessageDialog(null,"No existen registros posteriores" ,"Mensaje", JOptionPane.INFORMATION_MESSAGE);
 					}else {
-						etiq6.setText("Socio " + posicion + " de " + lista.size());
-						caja1.setText(String.valueOf(socio.getSocioId()));
-						caja2.setText(socio.getNombre());
-						caja3.setText(String.valueOf(socio.getEstatura()));
-						caja4.setText(String.valueOf(socio.getEdad()));
-						caja5.setText(socio.getLocalidad());
+						etiq6.setText("Socio " + posicion + " de " + (lista.size()-1));	
+						caja1.setText(String.valueOf(lista.get(posicion).getSocioId()));
+						caja2.setText(lista.get(posicion).getNombre());
+						caja3.setText(String.valueOf(lista.get(posicion).getEstatura()));
+						caja4.setText(String.valueOf(lista.get(posicion).getEdad()));
+						caja5.setText(lista.get(posicion).getLocalidad());
 						//.absolute(posicion);	
 					}
 				}
 				if(event.getSource() == boton1) { //Anterior
 					posicion--;
-					if (posicion < 1) {
+					if (posicion < 0) {
 						posicion = 1;
 						JOptionPane.showMessageDialog(null,"No existen registros anteriores" ,"Mensaje", JOptionPane.INFORMATION_MESSAGE);
 					}else {
-						etiq6.setText("Socio " + posicion + " de " + lista.size());
-						//rs.absolute(posicion);
-						caja1.setText(String.valueOf(socio.getSocioId()));
-						caja2.setText(socio.getNombre());
-						caja3.setText(String.valueOf(socio.getEstatura()));
-						caja4.setText(String.valueOf(socio.getEdad()));
-						caja5.setText(socio.getLocalidad());
+						etiq6.setText("Socio " + posicion + " de " + (lista.size()-1));	
+						caja1.setText(String.valueOf(lista.get(posicion).getSocioId()));
+						caja2.setText(lista.get(posicion).getNombre());
+						caja3.setText(String.valueOf(lista.get(posicion).getEstatura()));
+						caja4.setText(String.valueOf(lista.get(posicion).getEdad()));
+						caja5.setText(lista.get(posicion).getLocalidad());
 					}
 					
 				}
-				if(event.getSource() == botonAc) {
+				if(event.getSource() == botonAc) { //Actualizar
 					Socio socio2 = new Socio();
-					String nombreAntiguo = caja2.getText();
-					Integer estaturaAntiguo = Integer.valueOf(caja3.getText());
-					Integer edadAntiguo = socio.getEdad();
-					String localidadAntiguo = socio.getLocalidad();
-					
+					socio2.setSocioId(Integer.valueOf(caja1.getText()));
+					socio2.setNombre(caja2.getText());
+					socio2.setEstatura(Integer.valueOf(caja3.getText()));
+					socio2.setEdad(Integer.valueOf(caja4.getText()));
+					socio2.setLocalidad(caja5.getText());
+					abd.actualizar(socio2);
 					
 					
 				//	abd.actualizar(socioID, nombre, estatura, edad, localidad);
 					JOptionPane.showMessageDialog(null,"Se ha actualizado correctamente ");
 				}
-				if(event.getSource() == botonBo) {
-					int socioID = Integer.parseInt(caja1.getText());
-				//	abd.borrar(socioID);
+				if(event.getSource() == botonBo) { //Borrar
+					Socio socio2 = new Socio();
+					
+					abd.borrar(Integer.valueOf(caja1.getText()));
 					JOptionPane.showMessageDialog(null, "Se ha borrado correctamente.");
-				}
-				if(event.getSource() == botonNu) {
-
-					String nombre = caja2.getText();
-					int estatura = Integer.parseInt(caja3.getText());
-					int edad = Integer.parseInt(caja4.getText());
-					String localidad = caja5.getText();
-										
+				} 
+				if(event.getSource() == botonNu) { //Nuevo
+					Socio socio2 = new Socio();
+					socio2.setSocioId(Integer.valueOf(caja1.getText()));
+					socio2.setNombre(caja2.getText());
+					socio2.setEstatura(Integer.valueOf(caja3.getText()));
+					socio2.setEdad(Integer.valueOf(caja4.getText()));
+					socio2.setLocalidad(caja5.getText());
+					abd.nuevo(socio2);
 					//abd.nuevo(nombre, estatura, edad, localidad);
 					JOptionPane.showMessageDialog(null, "Se ha creado uno nuevo correctamente.");
 				}
