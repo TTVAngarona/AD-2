@@ -77,10 +77,10 @@ public class AccesoBdatos {
 		return 0;
 	}
 	public int nuevo(Socio socio) {
-		Transaction tx = session.beginTransaction();
-		
-		
-		
+		Transaction tx = session.beginTransaction();		
+		session.save(socio);
+		//System.out.println(socio.getSocioId() + socio.getNombre());
+		tx.commit();		
 		return 1;
 	}
 	/*public int nuevoId() {

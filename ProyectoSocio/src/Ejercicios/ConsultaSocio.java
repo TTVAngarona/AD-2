@@ -151,6 +151,7 @@ public class ConsultaSocio extends JFrame {
 				
 				
 				if(event.getSource() == boton3) { //buscar
+					caja1.setEditable(true);
 					posicion = 0;
 					etiq6.setText("Socio " + posicion + " de " + (lista.size()-1));	
 					caja1.setText(String.valueOf(lista.get(posicion).getSocioId()));
@@ -210,12 +211,14 @@ public class ConsultaSocio extends JFrame {
 					JOptionPane.showMessageDialog(null, "Se ha borrado correctamente.");
 				} 
 				if(event.getSource() == botonNu) { //Nuevo
+					int ultimo = lista.size()-1;
 					Socio socio2 = new Socio();
-					socio2.setSocioId(Integer.valueOf(caja1.getText()));
+					socio2.setSocioId(lista.get(ultimo).getSocioId()+1);
 					socio2.setNombre(caja2.getText());
 					socio2.setEstatura(Integer.valueOf(caja3.getText()));
 					socio2.setEdad(Integer.valueOf(caja4.getText()));
 					socio2.setLocalidad(caja5.getText());
+					System.out.println(lista.get(ultimo).getSocioId());
 					abd.nuevo(socio2);
 					//abd.nuevo(nombre, estatura, edad, localidad);
 					JOptionPane.showMessageDialog(null, "Se ha creado uno nuevo correctamente.");
