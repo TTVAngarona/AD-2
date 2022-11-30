@@ -213,6 +213,7 @@ public class ConsultaSocio extends JFrame {
 				if(event.getSource() == botonNu) { //Nuevo
 					int ultimo = lista.size()-1;
 					Socio socio2 = new Socio();
+					
 					socio2.setSocioId(lista.get(ultimo).getSocioId()+1);
 					socio2.setNombre(caja2.getText());
 					socio2.setEstatura(Integer.valueOf(caja3.getText()));
