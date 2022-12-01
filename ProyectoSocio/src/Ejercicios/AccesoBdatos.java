@@ -42,7 +42,7 @@ public class AccesoBdatos {
 		Query salida = null;
 		if(localidad.isEmpty()==false) { //Si localidad es distinto de vacio ejecuta lo de dentro
 			salida = session.createSQLQuery("call buscar(:loca)").addEntity(Socio.class).setParameter("loca", localidad);
-			 List<Socio> socios = salida.list();
+			List<Socio> socios = salida.list();
 			return socios;
 		}else {//Si esta vacio ejecuta consulta que devuelva todos los usuarios
 			//Statement consulta = conecta.createStatement();
